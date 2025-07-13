@@ -9,6 +9,7 @@ int main() {
     settings.antiAliasingLevel = 8;
     sf::RenderWindow window(sf::VideoMode({1920, 1200}), "My window",
                             sf::State::Windowed, settings);
+    window.setFramerateLimit(60);
     //------------------------------INITIALIZE-----------------------------
 
     //------------------------------LOAD-----------------------------
@@ -42,16 +43,16 @@ int main() {
         }
         // Movement (basic)
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-            playerSprite.move({0.f, -0.5f});
+            playerSprite.move({0.f, -1.0f});
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-            playerSprite.move({-0.5f, 0.f});
+            playerSprite.move({-1.0f, 0.f});
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-            playerSprite.move({0.f, 0.5f});
+            playerSprite.move({0.f, 1.0f});
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-            playerSprite.move({0.5f, 0.f});
+            playerSprite.move({1.0f, 0.f});
 
         window.clear(sf::Color::Black);
         window.draw(playerSprite);
