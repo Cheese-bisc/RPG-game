@@ -43,19 +43,13 @@ int main() {
   enemySprite.setScale({1.5, 1.5});
   enemySprite.setPosition({1720.f, 536.f});
 
-  // sf::RectangleShape bullet({25.f, 10.f});
-  // bullet.setPosition(playerSprite.getPosition());
   //------------------------------LOAD-----------------------------
 
   //---------------------------Calculate bullet direction ----------------
   vector<sf::RectangleShape> bullets;
-  // sf::Vector2f bulletDirection =
-  // enemySprite.getPosition() - bullet.getPosition();
-  // bulletDirection = normalizeVctr(bulletDirection);
-
   float bulletSpeed = 2.0f;
-  //---------------------------Calculate bullet bulletDirection
-  //----------------
+  sf::Vector2f bulletDirection;
+  //--------------------Calculate bullet bulletDirection----------------
   //------------------------------GAME-----------------------------
   // game loop
 
@@ -66,8 +60,6 @@ int main() {
         window.close();
       }
     }
-    // bullet.setPosition(bullet.getPosition() +
-    //                    bulletDirection * bulletSpeed);
     //  Movement (basic)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
       playerSprite.move({0.f, -60.f});
@@ -81,15 +73,32 @@ int main() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
       playerSprite.move({60.f, 0.f});
 
+    // multiple bullets
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
       bullets.push_back(sf::RectangleShape({25.f, 10.f}));
+
+      int lastBullet = bullets.size() - 1;
+      bullets[lastBullet].setPosition(playerSprite.getPosition());
+      bulletDirection =
+          enemySprite.getPosition() - bullets[lastBullet].getPosition();
+      bulletDirection = normalizeVctr(bulletDirection);
     }
 
+    for (int i = 0; i < bullets.size(); i++) {
+      bullets[i].setPosition(bullets[i].getPosition() +
+                             bulletDirection * bulletSpeed);
+    }
+
+    //--------DRAW------
     window.clear(sf::Color::Black);
     window.draw(playerSprite);
     window.draw(enemySprite);
-    // window.draw(bullet);
+
+    for (int i = 0; i < bullets.size(); i++) {
+      window.draw(bullets[i]);
+    }
     window.display();
+    //--------DRAW------
   }
   return 0;
   //------------------------------GAME-----------------------------
